@@ -1,19 +1,36 @@
 package com.miltcn.sosti.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.miltcn.sosti.domain.enums.Priority;
 import com.miltcn.sosti.domain.enums.Status;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ServiceOrder {
+@Entity
+public class ServiceOrder implements Serializable {
+    private static final long serialVersionUID = 1l;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate openingDate = LocalDate.now();
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate closingDate;
     private Priority priority;
     private Status status;
     private String title;
     private String comments;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "technician_id")
     private Technician technician;
 
     public ServiceOrder() {
