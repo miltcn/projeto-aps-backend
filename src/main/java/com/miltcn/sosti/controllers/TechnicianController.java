@@ -45,4 +45,10 @@ public class TechnicianController {
         Technician updatedTechnician = this.technicianService.update(id, technicianDTO);
         return ResponseEntity.ok().body(new TechnicianDTO(updatedTechnician));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<TechnicianDTO> delete(@PathVariable Integer id) {
+        this.technicianService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
