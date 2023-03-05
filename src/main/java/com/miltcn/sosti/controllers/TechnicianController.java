@@ -1,6 +1,7 @@
 package com.miltcn.sosti.controllers;
 
 import com.miltcn.sosti.domain.Technician;
+import com.miltcn.sosti.domain.dtos.TechnicianDTO;
 import com.miltcn.sosti.services.TechnicianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class TechnicianController {
     private TechnicianService technicianService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Technician> findById(@PathVariable Integer id) {
+    public ResponseEntity<TechnicianDTO> findById(@PathVariable Integer id) {
         Technician obj = this.technicianService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new TechnicianDTO(obj));
     }
 }
