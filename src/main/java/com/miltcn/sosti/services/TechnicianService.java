@@ -44,6 +44,14 @@ public class TechnicianService {
         return this.technicianRepository.save(oldTechnician);
     }
 
+    public void delete(Integer id) {
+        Technician technician = this.findById(id);
+        if(technician.getServiceOrders().size() > 0) {
+            throw new DataIntegrityViolationException("Não é possível deleter o técnico, pois existem ordens de serviços associadas a ele!");
+        }
+        this.technicianRepository.deleteById(id);
+    }
+
     private void validateByCpfEmail(TechnicianDTO technicianDTO) {
         Optional<Person> person = this.personRepository.findByCpf(technicianDTO.getCpf());
         if(person.isPresent() && person.get().getId() != technicianDTO.getId()) {
