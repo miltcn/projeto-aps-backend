@@ -1,5 +1,6 @@
 package com.miltcn.sosti.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.miltcn.sosti.domain.enums.Profile;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import java.util.List;
 public class Technician extends Person {
     private static final long serialVersionUID = 1l;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "technician")
     private List<ServiceOrder> serviceOrders = new ArrayList<>();
 
