@@ -1,6 +1,7 @@
 package com.miltcn.sosti.services;
 
 import com.miltcn.sosti.domain.Technician;
+import com.miltcn.sosti.domain.dtos.TechnicianDTO;
 import com.miltcn.sosti.repositories.TechnicianRepository;
 import com.miltcn.sosti.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,11 @@ public class TechnicianService {
 
     public List<Technician> findAll() {
         return this.technicianRepository.findAll();
+    }
+
+    public Technician create(TechnicianDTO technicianDTO) {
+        technicianDTO.setId(null);
+        Technician technician = new Technician(technicianDTO);
+        return this.technicianRepository.save(technician);
     }
 }
