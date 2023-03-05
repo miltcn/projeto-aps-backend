@@ -5,6 +5,7 @@ import com.miltcn.sosti.domain.Technician;
 import com.miltcn.sosti.domain.enums.Profile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,9 +16,13 @@ public class TechnicianDTO implements Serializable {
     private static final long serialVersionUID = 1l;
 
     protected Integer id;
+    @NotNull(message = "Required name field")
     protected String name;
+    @NotNull(message = "Required cpf field")
     protected String cpf;
+    @NotNull(message = "Required email field")
     protected String email;
+    @NotNull(message = "Required password field")
     protected String password;
     protected Set<Integer> profiles = new HashSet<>();
 
