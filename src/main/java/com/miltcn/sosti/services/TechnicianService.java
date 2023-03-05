@@ -2,6 +2,7 @@ package com.miltcn.sosti.services;
 
 import com.miltcn.sosti.domain.Technician;
 import com.miltcn.sosti.repositories.TechnicianRepository;
+import com.miltcn.sosti.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,6 @@ public class TechnicianService {
 
     public Technician findById(Integer id) {
         Optional<Technician>  obj = technicianRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Técnico não encotrado! Id: " + id));
     }
 }
