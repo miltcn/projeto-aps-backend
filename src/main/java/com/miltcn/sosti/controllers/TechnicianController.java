@@ -39,4 +39,10 @@ public class TechnicianController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(technician.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TechnicianDTO> update(@PathVariable Integer id, @Valid @RequestBody TechnicianDTO technicianDTO) {
+        Technician updatedTechnician = this.technicianService.update(id, technicianDTO);
+        return ResponseEntity.ok().body(new TechnicianDTO(updatedTechnician));
+    }
 }

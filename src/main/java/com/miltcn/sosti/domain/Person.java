@@ -2,6 +2,7 @@ package com.miltcn.sosti.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.miltcn.sosti.domain.enums.Profile;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public abstract class Person implements Serializable {
     protected Integer id;
     protected String name;
 
+    @CPF
     @Column(unique = true)
     protected String cpf;
 

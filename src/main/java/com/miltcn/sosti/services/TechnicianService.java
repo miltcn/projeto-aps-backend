@@ -36,6 +36,14 @@ public class TechnicianService {
         return this.technicianRepository.save(technician);
     }
 
+    public Technician update(Integer id, TechnicianDTO technicianDTO) {
+        technicianDTO.setId(id);
+        Technician oldTechnician = this.findById(id);
+        this.validateByCpfEmail(technicianDTO);
+        oldTechnician = new Technician(technicianDTO);
+        return this.technicianRepository.save(oldTechnician);
+    }
+
     private void validateByCpfEmail(TechnicianDTO technicianDTO) {
         Optional<Person> person = this.personRepository.findByCpf(technicianDTO.getCpf());
         if(person.isPresent() && person.get().getId() != technicianDTO.getId()) {
@@ -43,7 +51,7 @@ public class TechnicianService {
         }
 
         person = this.personRepository.findByEmail(technicianDTO.getEmail());
-        if(person.isPresent() && person.get().getEmail() != technicianDTO.getEmail()) {
+        if(person.isPresent() && person.get().getId() != technicianDTO.getId()) {
             throw new DataIntegrityViolationException("Já existe um usuário com mesmo E-mail cadastrado no sistema!");
         }
     }
