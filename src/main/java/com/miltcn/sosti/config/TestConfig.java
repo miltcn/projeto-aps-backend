@@ -14,6 +14,6 @@ public class TestConfig {
 
     @Bean
     public void startDatabase() {
-        dbService.startDatabase();
+        this.dbService.startDatabase();
     }
 }
