@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,13 @@ public class ServiceOrderService {
         return this.serviceOrderRepository.save(this.newServiceOrder(serviceOrderDTO));
     }
 
+    public ServiceOrder update(Integer id, ServiceOrderDTO serviceOrderDTO) {
+        serviceOrderDTO.setId(id);
+        ServiceOrder oldServiceOrder = this.findById(id);
+        oldServiceOrder = this.newServiceOrder(serviceOrderDTO);
+        return this.serviceOrderRepository.save(oldServiceOrder);
+    }
+
     public ServiceOrder newServiceOrder(ServiceOrderDTO serviceOrderDTO) {
 
         Technician technician = this.technicianService.findById(serviceOrderDTO.getTechnicianId());
@@ -46,6 +54,10 @@ public class ServiceOrderService {
         ServiceOrder serviceOrder = new ServiceOrder();
         if(serviceOrderDTO.getId() != null) {
             serviceOrder.setId(serviceOrderDTO.getId());
+        }
+
+        if(serviceOrderDTO.getStatusCode().equals(2)) {
+            serviceOrder.setClosingDate(LocalDate.now());
         }
 
         serviceOrder.setTechnician(technician);
