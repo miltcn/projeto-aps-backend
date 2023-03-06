@@ -39,4 +39,10 @@ public class ServiceOrderController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(serviceOrder.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ServiceOrderDTO> update(@PathVariable Integer id, @Valid @RequestBody ServiceOrderDTO serviceOrderDTO) {
+        ServiceOrder newServiceOrder = this.serviceOrderService.update(id, serviceOrderDTO);
+        return ResponseEntity.ok().body(new ServiceOrderDTO(newServiceOrder));
+    }
 }
