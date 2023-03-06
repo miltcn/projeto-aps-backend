@@ -3,6 +3,7 @@ package com.miltcn.sosti.domain.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.miltcn.sosti.domain.ServiceOrder;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -14,11 +15,17 @@ public class ServiceOrderDTO implements Serializable {
     private LocalDate openingDate = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate closingDate;
+    @NotNull(message = "priorityCode field is required")
     private Integer priorityCode;
+    @NotNull(message = "statusCode field is required")
     private Integer statusCode;
+    @NotNull(message = "title field is required")
     private String title;
+    @NotNull(message = "comments field is required")
     private String comments;
+    @NotNull(message = "clientId field is required")
     private Integer clientId;
+    @NotNull(message = "technicianId field is required")
     private Integer technicianId;
     private String clientName;
     private String technicianName;
