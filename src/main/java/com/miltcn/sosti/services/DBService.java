@@ -1,16 +1,10 @@
 package com.miltcn.sosti.services;
 
-import com.miltcn.sosti.domain.Client;
-import com.miltcn.sosti.domain.Material;
-import com.miltcn.sosti.domain.ServiceOrder;
-import com.miltcn.sosti.domain.Technician;
+import com.miltcn.sosti.domain.*;
 import com.miltcn.sosti.domain.enums.Priority;
 import com.miltcn.sosti.domain.enums.Profile;
 import com.miltcn.sosti.domain.enums.Status;
-import com.miltcn.sosti.repositories.ClientRepository;
-import com.miltcn.sosti.repositories.MaterialRepository;
-import com.miltcn.sosti.repositories.ServiceOrderRepository;
-import com.miltcn.sosti.repositories.TechnicianRepository;
+import com.miltcn.sosti.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +22,9 @@ public class DBService {
     private ServiceOrderRepository serviceOrderRepository;
     @Autowired
     private MaterialRepository materialRepository;
+
+    @Autowired
+    private ServiceOrderMaterialRepository serviceOrderMaterialRepository;
 
     public void startDatabase() {
 
@@ -52,11 +49,14 @@ public class DBService {
         Material material2 = new Material(null, "Placa de vídeo", new BigDecimal("750.00"));
         Material material3 = new Material(null, "Memória RAM", new BigDecimal("250.00"));
 
+        ServiceOrderMaterial serviceOrderMaterial1 = new ServiceOrderMaterial(null, serviceOrder1, material1, 3);
+        ServiceOrderMaterial serviceOrderMaterial2 = new ServiceOrderMaterial(null, serviceOrder1, material2, 3);
+
         technicianRepository.saveAll(Arrays.asList(technician1, technician2, technician3));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
         serviceOrderRepository.saveAll(Arrays.asList(serviceOrder1, serviceOrder2, serviceOrder3));
-
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));
+        serviceOrderMaterialRepository.saveAll(Arrays.asList(serviceOrderMaterial1, serviceOrderMaterial2));
 
     }
 }

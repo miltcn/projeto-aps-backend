@@ -14,12 +14,9 @@ public class Material implements Serializable {
     private Integer id;
     private String name;
     private BigDecimal price;
-    @ManyToMany
-    @JoinTable(
-            name = "serviceorder_material",
-            joinColumns = @JoinColumn(name = "material_id"),
-            inverseJoinColumns = @JoinColumn(name = "service_order_id"))
-    private Set<ServiceOrder> serviceOrders;
+
+    @OneToMany(mappedBy = "material")
+    private Set<ServiceOrderMaterial> serviceOrders;
 
     public Material() {
         super();

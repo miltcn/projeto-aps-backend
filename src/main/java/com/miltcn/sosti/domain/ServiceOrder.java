@@ -34,8 +34,8 @@ public class ServiceOrder implements Serializable {
     @JoinColumn(name = "technician_id")
     private Technician technician;
 
-    @ManyToMany(mappedBy = "serviceOrders")
-    private Set<Material> materials;
+    @OneToMany(mappedBy = "serviceOrder")
+    private Set<ServiceOrderMaterial> materials;
 
     public ServiceOrder() {
     }
