@@ -1,11 +1,17 @@
 package com.miltcn.sosti.domain.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.miltcn.sosti.domain.CustomMaterial;
 import com.miltcn.sosti.domain.ServiceOrder;
+import com.miltcn.sosti.domain.ServiceOrderMaterial;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ServiceOrderDTO implements Serializable {
     private static final long serialVersionUID = 1l;
@@ -30,6 +36,11 @@ public class ServiceOrderDTO implements Serializable {
     private String clientName;
     private String technicianName;
 
+    @JsonIgnore
+    private Set<ServiceOrderMaterial> serviceOrderMaterials;
+
+    private Set<CustomMaterial> customMaterials;
+
     public ServiceOrderDTO() {
         super();
     }
@@ -47,6 +58,9 @@ public class ServiceOrderDTO implements Serializable {
         this.technicianId = serviceOrder.getTechnician().getId();
         this.clientName = serviceOrder.getClient().getName();
         this.technicianName = serviceOrder.getTechnician().getName();
+//        this.materiais = serviceOrder.getServiceOrderMaterials().stream().map(x -> x.getMaterial().getName()).collect(Collectors.toList());
+//        this.materialQuantity = serviceOrder.getServiceOrderMaterials().stream().map(x -> x.getQuantity()).collect(Collectors.toList());
+        this.customMaterials = serviceOrder.getServiceOrderMaterials().stream().map(x -> buildCustomMaterial(x)).collect(Collectors.toSet());
     }
 
     public Integer getId() {
@@ -135,5 +149,26 @@ public class ServiceOrderDTO implements Serializable {
 
     public void setTechnicianName(String technicianName) {
         this.technicianName = technicianName;
+    }
+
+    public Set<ServiceOrderMaterial> getServiceOrderMaterials() {
+        return serviceOrderMaterials;
+    }
+
+    public Set<CustomMaterial> getCustomMaterials() {
+        return customMaterials;
+    }
+
+    public void setCustomMaterials(Set<CustomMaterial> customMaterials) {
+        this.customMaterials = customMaterials;
+    }
+
+    public CustomMaterial buildCustomMaterial(ServiceOrderMaterial serviceOrderMaterial) {
+        CustomMaterial customMaterial = new CustomMaterial(
+                                                serviceOrderMaterial.getMaterial().getName(),
+                                                serviceOrderMaterial.getMaterial().getPrice(),
+                                                serviceOrderMaterial.getQuantity(),
+                                                serviceOrderMaterial.getId());
+        return customMaterial;
     }
 }

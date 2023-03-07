@@ -1,11 +1,19 @@
 package com.miltcn.sosti.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Set;
 
-@Entity
+@Entity(name = "material")
+@SQLDelete(sql = "UPDATE material SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Material implements Serializable {
     private static final long serialVersionUID = 1l;
 
@@ -15,8 +23,14 @@ public class Material implements Serializable {
     private String name;
     private BigDecimal price;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate createdAt = LocalDate.now();
+
+    private boolean deleted = Boolean.FALSE;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "material")
-    private Set<ServiceOrderMaterial> serviceOrders;
+    private Set<ServiceOrderMaterial> serviceOrderMaterials;
 
     public Material() {
         super();
@@ -51,6 +65,26 @@ public class Material implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Set<ServiceOrderMaterial> getServiceOrderMaterials() {
+        return serviceOrderMaterials;
     }
 
     @Override

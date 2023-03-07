@@ -1,6 +1,7 @@
 package com.miltcn.sosti.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.miltcn.sosti.domain.enums.Priority;
 import com.miltcn.sosti.domain.enums.Status;
 
@@ -34,8 +35,9 @@ public class ServiceOrder implements Serializable {
     @JoinColumn(name = "technician_id")
     private Technician technician;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "serviceOrder")
-    private Set<ServiceOrderMaterial> materials;
+    private Set<ServiceOrderMaterial> serviceOrderMaterials;
 
     public ServiceOrder() {
     }
@@ -120,5 +122,9 @@ public class ServiceOrder implements Serializable {
 
     public void setTechnician(Technician technician) {
         this.technician = technician;
+    }
+
+    public Set<ServiceOrderMaterial> getServiceOrderMaterials() {
+        return serviceOrderMaterials;
     }
 }
