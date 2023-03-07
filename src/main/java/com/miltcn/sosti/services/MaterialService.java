@@ -47,7 +47,7 @@ public class MaterialService {
         Material material = this.findById(id);
         if(material.getServiceOrderMaterials().size() > 0) {
             for ( ServiceOrderMaterial serviceOrderMaterial : material.getServiceOrderMaterials()) {
-                if(serviceOrderMaterial.getServiceOrder().getStatus().getCode() != 3) {
+                if(serviceOrderMaterial.getServiceOrder().getStatus().getCode() != 2) {
                     throw new DataIntegrityViolationException("Não é possível deletar o material porque está incluindo em alguns chamados não encerrados!");
                 }
             }
