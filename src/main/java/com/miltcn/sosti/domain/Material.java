@@ -1,19 +1,35 @@
 package com.miltcn.sosti.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
-public class Material {
+@Entity
+public class Material implements Serializable {
+    private static final long serialVersionUID = 1l;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private BigDecimal value;
+    private BigDecimal price;
+    @ManyToMany
+    @JoinTable(
+            name = "serviceorder_material",
+            joinColumns = @JoinColumn(name = "material_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_order_id"))
+    private Set<ServiceOrder> serviceOrders;
 
     public Material() {
+        super();
     }
 
-    public Material(Integer id, String name, BigDecimal value) {
+    public Material(Integer id, String name, BigDecimal price) {
+        super();
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.price = price;
     }
 
     public Integer getId() {
@@ -32,12 +48,12 @@ public class Material {
         this.name = name;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override

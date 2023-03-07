@@ -7,6 +7,7 @@ import com.miltcn.sosti.domain.enums.Status;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class ServiceOrder implements Serializable {
@@ -32,6 +33,9 @@ public class ServiceOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "technician_id")
     private Technician technician;
+
+    @ManyToMany(mappedBy = "serviceOrders")
+    private Set<Material> materials;
 
     public ServiceOrder() {
     }
