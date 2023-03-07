@@ -9,6 +9,7 @@ import com.miltcn.sosti.domain.ServiceOrderMaterial;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,9 +59,12 @@ public class ServiceOrderDTO implements Serializable {
         this.technicianId = serviceOrder.getTechnician().getId();
         this.clientName = serviceOrder.getClient().getName();
         this.technicianName = serviceOrder.getTechnician().getName();
-//        this.materiais = serviceOrder.getServiceOrderMaterials().stream().map(x -> x.getMaterial().getName()).collect(Collectors.toList());
-//        this.materialQuantity = serviceOrder.getServiceOrderMaterials().stream().map(x -> x.getQuantity()).collect(Collectors.toList());
-        this.customMaterials = serviceOrder.getServiceOrderMaterials().stream().map(x -> buildCustomMaterial(x)).collect(Collectors.toSet());
+
+        if(serviceOrder.getServiceOrderMaterials() != null) {
+            this.customMaterials = serviceOrder.getServiceOrderMaterials().stream().map(x -> buildCustomMaterial(x)).collect(Collectors.toSet());
+        }else {
+            this.customMaterials = Collections.emptySet();
+        }
     }
 
     public Integer getId() {
@@ -165,6 +169,7 @@ public class ServiceOrderDTO implements Serializable {
 
     public CustomMaterial buildCustomMaterial(ServiceOrderMaterial serviceOrderMaterial) {
         CustomMaterial customMaterial = new CustomMaterial(
+                                                serviceOrderMaterial.getMaterial().getId(),
                                                 serviceOrderMaterial.getMaterial().getName(),
                                                 serviceOrderMaterial.getMaterial().getPrice(),
                                                 serviceOrderMaterial.getQuantity(),
