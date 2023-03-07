@@ -2,6 +2,7 @@ package com.miltcn.sosti.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.miltcn.sosti.domain.dtos.MaterialDTO;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -41,6 +42,13 @@ public class Material implements Serializable {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Material(MaterialDTO materialDTO) {
+        super();
+        this.id = materialDTO.getId();
+        this.name = materialDTO.getName();
+        this.price = materialDTO.getPrice();
     }
 
     public Integer getId() {
