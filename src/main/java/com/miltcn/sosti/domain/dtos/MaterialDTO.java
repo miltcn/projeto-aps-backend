@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.miltcn.sosti.domain.Material;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class MaterialDTO {
+public class MaterialDTO implements Serializable {
+    private static final long serialVersionUID = 1l;
 
     private Integer id;
     @NotNull(message = "Required name field")

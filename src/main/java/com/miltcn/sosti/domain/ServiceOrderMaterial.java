@@ -1,7 +1,10 @@
 package com.miltcn.sosti.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +24,9 @@ public class ServiceOrderMaterial implements Serializable {
     private Material material;
 
     private Integer quantity;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate createdAt = LocalDate.now();
 
     public ServiceOrderMaterial() {
     }
@@ -62,6 +68,14 @@ public class ServiceOrderMaterial implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
