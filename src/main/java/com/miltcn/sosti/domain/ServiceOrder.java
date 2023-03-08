@@ -1,12 +1,14 @@
 package com.miltcn.sosti.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.miltcn.sosti.domain.enums.Priority;
 import com.miltcn.sosti.domain.enums.Status;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class ServiceOrder implements Serializable {
@@ -32,6 +34,10 @@ public class ServiceOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "technician_id")
     private Technician technician;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "serviceOrder")
+    private Set<ServiceOrderMaterial> serviceOrderMaterials;
 
     public ServiceOrder() {
     }
@@ -116,5 +122,9 @@ public class ServiceOrder implements Serializable {
 
     public void setTechnician(Technician technician) {
         this.technician = technician;
+    }
+
+    public Set<ServiceOrderMaterial> getServiceOrderMaterials() {
+        return serviceOrderMaterials;
     }
 }

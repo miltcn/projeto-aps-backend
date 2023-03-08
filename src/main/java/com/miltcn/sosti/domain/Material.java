@@ -1,19 +1,54 @@
 package com.miltcn.sosti.domain;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.miltcn.sosti.domain.dtos.MaterialDTO;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-public class Material {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Set;
+
+@Entity(name = "material")
+@SQLDelete(sql = "UPDATE material SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
+public class Material implements Serializable {
+    private static final long serialVersionUID = 1l;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private BigDecimal value;
+    private BigDecimal price;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    protected LocalDate createdAt = LocalDate.now();
+
+    private boolean deleted = Boolean.FALSE;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "material")
+    private Set<ServiceOrderMaterial> serviceOrderMaterials;
 
     public Material() {
+        super();
     }
 
-    public Material(Integer id, String name, BigDecimal value) {
+    public Material(Integer id, String name, BigDecimal price) {
+        super();
         this.id = id;
         this.name = name;
-        this.value = value;
+        this.price = price;
+    }
+
+    public Material(MaterialDTO materialDTO) {
+        super();
+        this.id = materialDTO.getId();
+        this.name = materialDTO.getName();
+        this.price = materialDTO.getPrice();
     }
 
     public Integer getId() {
@@ -32,12 +67,32 @@ public class Material {
         this.name = name;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Set<ServiceOrderMaterial> getServiceOrderMaterials() {
+        return serviceOrderMaterials;
     }
 
     @Override
