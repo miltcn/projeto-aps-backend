@@ -8,6 +8,7 @@ import com.miltcn.sosti.repositories.TechnicianRepository;
 import com.miltcn.sosti.services.exceptions.DataIntegrityViolationException;
 import com.miltcn.sosti.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class TechnicianService {
     private TechnicianRepository technicianRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public Technician findById(Integer id) {
         Optional<Technician>  obj = technicianRepository.findById(id);
@@ -31,6 +34,7 @@ public class TechnicianService {
 
     public Technician create(TechnicianDTO technicianDTO) {
         technicianDTO.setId(null);
+        technicianDTO.setPassword(encoder.encode(technicianDTO.getPassword()));
         validateByCpfEmail(technicianDTO);
         Technician technician = new Technician(technicianDTO);
         return this.technicianRepository.save(technician);
