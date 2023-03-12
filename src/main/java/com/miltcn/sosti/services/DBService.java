@@ -30,6 +30,10 @@ public class DBService {
 
     public void startDatabase() {
 
+        Technician technician = new Technician(null, "Eduardo Nicolas", "87973255389", "eduardonicolasdamata@zf.com", encoder.encode("123"));
+        technician.addProfile(Profile.ADMIN);
+        technician.addProfile(Profile.TECHNICIAN);
+
         Technician technician1 = new Technician(null, "Pedro Fernando Lima", "26454882772", "pedro.fernando.lima@sha.com.br", encoder.encode("123"));
         technician1.addProfile(Profile.TECHNICIAN);
         Technician technician2 = new Technician(null, "Erick Edson Yago Aragão", "36723345533", "erickedsonaragao@outlook.com.br", encoder.encode("123"));
@@ -54,7 +58,7 @@ public class DBService {
         ServiceOrderMaterial serviceOrderMaterial1 = new ServiceOrderMaterial(null, serviceOrder1, material1, 3);
         ServiceOrderMaterial serviceOrderMaterial2 = new ServiceOrderMaterial(null, serviceOrder1, material2, 3);
 
-        technicianRepository.saveAll(Arrays.asList(technician1, technician2, technician3));
+        technicianRepository.saveAll(Arrays.asList(technician, technician1, technician2, technician3));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
         serviceOrderRepository.saveAll(Arrays.asList(serviceOrder1, serviceOrder2, serviceOrder3));
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));
