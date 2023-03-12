@@ -6,6 +6,7 @@ import com.miltcn.sosti.domain.enums.Profile;
 import com.miltcn.sosti.domain.enums.Status;
 import com.miltcn.sosti.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,23 +23,28 @@ public class DBService {
     private ServiceOrderRepository serviceOrderRepository;
     @Autowired
     private MaterialRepository materialRepository;
-
     @Autowired
     private ServiceOrderMaterialRepository serviceOrderMaterialRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public void startDatabase() {
 
-        Technician technician1 = new Technician(null, "Pedro Fernando Lima", "26454882772", "pedro.fernando.lima@sha.com.br", "123");
+        Technician technician = new Technician(null, "Eduardo Nicolas", "87973255389", "eduardonicolasdamata@zf.com", encoder.encode("123"));
+        technician.addProfile(Profile.ADMIN);
+        technician.addProfile(Profile.TECHNICIAN);
+
+        Technician technician1 = new Technician(null, "Pedro Fernando Lima", "26454882772", "pedro.fernando.lima@sha.com.br", encoder.encode("123"));
         technician1.addProfile(Profile.TECHNICIAN);
-        Technician technician2 = new Technician(null, "Erick Edson Yago Aragão", "36723345533", "erickedsonaragao@outlook.com.br", "123");
+        Technician technician2 = new Technician(null, "Erick Edson Yago Aragão", "36723345533", "erickedsonaragao@outlook.com.br", encoder.encode("123"));
         technician2.addProfile(Profile.TECHNICIAN);
-        Technician technician3 = new Technician(null, "Cecília Olivia Assis", "29537155501", "ceciliaoliviaassis@bat.com", "123");
+        Technician technician3 = new Technician(null, "Cecília Olivia Assis", "29537155501", "ceciliaoliviaassis@bat.com", encoder.encode("123"));
         technician3.addProfile(Profile.TECHNICIAN);
 
 
-        Client client1 = new Client(null, "Ruan Danilo Teixeira", "64861497604", "ruan.danilo.teixeira@tecsysbrasil.com.br", "123");
-        Client client2 = new Client(null, "Francisco Enrico da Mota", "31656351706", "francisco_enrico_damota@prifree.fr", "123");
-        Client client3 = new Client(null, "Eloá Alessandra da Cruz", "19615681601", "eloa-dacruz81@rabelloadvogados.com.br", "123");
+        Client client1 = new Client(null, "Ruan Danilo Teixeira", "64861497604", "ruan.danilo.teixeira@tecsysbrasil.com.br", encoder.encode("123"));
+        Client client2 = new Client(null, "Francisco Enrico da Mota", "31656351706", "francisco_enrico_damota@prifree.fr", encoder.encode("123"));
+        Client client3 = new Client(null, "Eloá Alessandra da Cruz", "19615681601", "eloa-dacruz81@rabelloadvogados.com.br", encoder.encode("123"));
 
 
         ServiceOrder serviceOrder1 = new ServiceOrder(null, Priority.MEDIA, Status.ANDAMENTO, "Chamado 01", "Chamada Teste 01", client1, technician1);
@@ -52,7 +58,7 @@ public class DBService {
         ServiceOrderMaterial serviceOrderMaterial1 = new ServiceOrderMaterial(null, serviceOrder1, material1, 3);
         ServiceOrderMaterial serviceOrderMaterial2 = new ServiceOrderMaterial(null, serviceOrder1, material2, 3);
 
-        technicianRepository.saveAll(Arrays.asList(technician1, technician2, technician3));
+        technicianRepository.saveAll(Arrays.asList(technician, technician1, technician2, technician3));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
         serviceOrderRepository.saveAll(Arrays.asList(serviceOrder1, serviceOrder2, serviceOrder3));
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));

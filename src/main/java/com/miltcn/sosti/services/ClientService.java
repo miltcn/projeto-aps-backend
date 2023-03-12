@@ -8,6 +8,7 @@ import com.miltcn.sosti.repositories.ClientRepository;
 import com.miltcn.sosti.services.exceptions.DataIntegrityViolationException;
 import com.miltcn.sosti.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class ClientService {
     private ClientRepository clientRepository;
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public Client findById(Integer id) {
         Optional<Client>  obj = clientRepository.findById(id);
@@ -31,6 +34,7 @@ public class ClientService {
 
     public Client create(ClientDTO clientDTO) {
         clientDTO.setId(null);
+        clientDTO.setPassword(encoder.encode(clientDTO.getPassword()));
         validateByCpfEmail(clientDTO);
         Client client = new Client(clientDTO);
         return this.clientRepository.save(client);
