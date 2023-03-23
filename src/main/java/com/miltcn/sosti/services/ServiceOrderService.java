@@ -10,7 +10,6 @@ import com.miltcn.sosti.repositories.ServiceOrderRepository;
 import com.miltcn.sosti.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,8 +40,8 @@ public class ServiceOrderService {
 
     public ServiceOrder update(Integer id, ServiceOrderDTO serviceOrderDTO) {
         serviceOrderDTO.setId(id);
-        ServiceOrder oldServiceOrder = this.findById(id);
-        oldServiceOrder = this.newServiceOrder(serviceOrderDTO);
+        this.findById(id);
+        ServiceOrder oldServiceOrder = this.newServiceOrder(serviceOrderDTO);
         return this.serviceOrderRepository.save(oldServiceOrder);
     }
 

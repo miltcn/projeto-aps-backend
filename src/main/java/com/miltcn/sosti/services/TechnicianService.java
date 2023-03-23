@@ -42,15 +42,15 @@ public class TechnicianService {
 
     public Technician update(Integer id, TechnicianDTO technicianDTO) {
         technicianDTO.setId(id);
-        Technician oldTechnician = this.findById(id);
+        this.findById(id);
         this.validateByCpfEmail(technicianDTO);
-        oldTechnician = new Technician(technicianDTO);
+        Technician oldTechnician = new Technician(technicianDTO);
         return this.technicianRepository.save(oldTechnician);
     }
 
     public void delete(Integer id) {
         Technician technician = this.findById(id);
-        if(technician.getServiceOrders().size() > 0) {
+        if(!technician.getServiceOrders().isEmpty()) {
             throw new DataIntegrityViolationException("Não é possível deleter o técnico, pois existem ordens de serviços associadas a ele!");
         }
         this.technicianRepository.deleteById(id);
@@ -58,12 +58,12 @@ public class TechnicianService {
 
     private void validateByCpfEmail(TechnicianDTO technicianDTO) {
         Optional<Person> person = this.personRepository.findByCpf(technicianDTO.getCpf());
-        if(person.isPresent() && person.get().getId() != technicianDTO.getId()) {
+        if(person.isPresent() && !person.get().getId().equals(technicianDTO.getId())) {
             throw new DataIntegrityViolationException("Já existe um usuário com mesmo CPF cadastrado no sistema!");
         }
 
         person = this.personRepository.findByEmail(technicianDTO.getEmail());
-        if(person.isPresent() && person.get().getId() != technicianDTO.getId()) {
+        if(person.isPresent() && !person.get().getId().equals(technicianDTO.getId())) {
             throw new DataIntegrityViolationException("Já existe um usuário com mesmo E-mail cadastrado no sistema!");
         }
     }

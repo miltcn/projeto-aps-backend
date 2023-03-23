@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -168,12 +167,12 @@ public class ServiceOrderDTO implements Serializable {
     }
 
     public CustomMaterial buildCustomMaterial(ServiceOrderMaterial serviceOrderMaterial) {
-        CustomMaterial customMaterial = new CustomMaterial(
-                                                serviceOrderMaterial.getMaterial().getId(),
-                                                serviceOrderMaterial.getMaterial().getName(),
-                                                serviceOrderMaterial.getMaterial().getPrice(),
-                                                serviceOrderMaterial.getQuantity(),
-                                                serviceOrderMaterial.getId());
-        return customMaterial;
+        return new CustomMaterial(
+                                    serviceOrderMaterial.getMaterial().getId(),
+                                    serviceOrderMaterial.getMaterial().getName(),
+                                    serviceOrderMaterial.getMaterial().getPrice(),
+                                    serviceOrderMaterial.getQuantity(),
+                                    serviceOrderMaterial.getId());
+
     }
 }
