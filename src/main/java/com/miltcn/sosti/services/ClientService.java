@@ -42,28 +42,28 @@ public class ClientService {
 
     public Client update(Integer id, ClientDTO clientDTO) {
         clientDTO.setId(id);
-        Client oldClient = this.findById(id);
+        this.findById(id);
         this.validateByCpfEmail(clientDTO);
-        oldClient = new Client(clientDTO);
+        Client oldClient = new Client(clientDTO);
         return this.clientRepository.save(oldClient);
     }
 
     public void delete(Integer id) {
         Client client = this.findById(id);
-        if(client.getServiceOrders().size() > 0) {
-            throw new DataIntegrityViolationException("Não é possível deleter o cliente, pois existem ordens de serviços associadas a ele!");
+        if(!client.getServiceOrders().isEmpty()) {
+            throw new DataIntegrityViolationException("Não é possível deletar o cliente, pois existem ordens de serviços associadas a ele!");
         }
         this.clientRepository.deleteById(id);
     }
 
     private void validateByCpfEmail(ClientDTO clientDTO) {
         Optional<Person> person = this.personRepository.findByCpf(clientDTO.getCpf());
-        if(person.isPresent() && person.get().getId() != clientDTO.getId()) {
+        if(person.isPresent() && !person.get().getId().equals(clientDTO.getId())) {
             throw new DataIntegrityViolationException("Já existe um usuário com mesmo CPF cadastrado no sistema!");
         }
 
         person = this.personRepository.findByEmail(clientDTO.getEmail());
-        if(person.isPresent() && person.get().getId() != clientDTO.getId()) {
+        if(person.isPresent() && !person.get().getId().equals(clientDTO.getId())) {
             throw new DataIntegrityViolationException("Já existe um usuário com mesmo E-mail cadastrado no sistema!");
         }
     }

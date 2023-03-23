@@ -35,7 +35,7 @@ public class MaterialService {
     public Material update(Integer id, MaterialDTO materialDTO) {
         materialDTO.setId(id);
         Material oldMaterial = this.findById(id);
-        if (oldMaterial.getServiceOrderMaterials().size() > 0) {
+        if (!oldMaterial.getServiceOrderMaterials().isEmpty()) {
             throw new DataIntegrityViolationException("Não é possível atualizar o material porque está incluindo em alguns chamados!");
 
         }
@@ -45,7 +45,7 @@ public class MaterialService {
 
     public void delete(Integer id) {
         Material material = this.findById(id);
-        if(material.getServiceOrderMaterials().size() > 0) {
+        if(!material.getServiceOrderMaterials().isEmpty()) {
             for ( ServiceOrderMaterial serviceOrderMaterial : material.getServiceOrderMaterials()) {
                 if(serviceOrderMaterial.getServiceOrder().getStatus().getCode() != 2) {
                     throw new DataIntegrityViolationException("Não é possível deletar o material porque está incluindo em alguns chamados não encerrados!");
