@@ -37,8 +37,22 @@ public class DBService {
         technician1.addProfile(Profile.TECHNICIAN);
         Technician technician2 = new Technician(null, "Erick Edson Yago Aragão", "36723345533", "erickedsonaragao@outlook.com.br", encoder.encode("123"));
         technician2.addProfile(Profile.TECHNICIAN);
-        Technician technician3 = new Technician(null, "Cecília Olivia Assis", "29537155501", "ceciliaoliviaassis@bat.com", encoder.encode("123"));
+        Technician technician3 = new Technician(null, "Cecília Olivia Assis", "88553538370", "ceciliaoliviaassis@bat.com", encoder.encode("123"));
         technician3.addProfile(Profile.TECHNICIAN);
+        Technician technician4 = new Technician(null, "José Arthur Almeida", "29537155501", "jose.arthur.almeida@eletrovip.com", encoder.encode("123"));
+        technician4.addProfile(Profile.TECHNICIAN);
+        Technician technician5 = new Technician(null, "Bárbara Clarice Joana Dias", "79807605300", "barbara-dias72@demetriushairstudio.com.br", encoder.encode("123"));
+        technician5.addProfile(Profile.TECHNICIAN);
+        Technician technician6 = new Technician(null, "Augusto Pedro Henrique Julio Farias", "03582902366", "augusto-farias90@homail.com", encoder.encode("123"));
+        technician6.addProfile(Profile.TECHNICIAN);
+        Technician technician7 = new Technician(null, "Thomas Raul Nunes", "64146421349", "thomas_raul_nunes@technocut.com.br", encoder.encode("123"));
+        technician7.addProfile(Profile.TECHNICIAN);
+        Technician technician8 = new Technician(null, "Danilo Anderson Nascimento", "72227565314", "danilo_nascimento@inbox.com", encoder.encode("123"));
+        technician8.addProfile(Profile.TECHNICIAN);
+        Technician technician9 = new Technician(null, "Fabiana Raimunda Viana", "06973710344", "fabiana.raimunda.viana@hotmai.com", encoder.encode("123"));
+        technician9.addProfile(Profile.TECHNICIAN);
+        Technician technician10 = new Technician(null, "Ruan Breno Pedro Lopes", "31200335376", "ruan.breno.lopes@athoscontabil.com.br", encoder.encode("123"));
+        technician10.addProfile(Profile.TECHNICIAN);
 
 
         Client client1 = new Client(null, "Ruan Danilo Teixeira", "64861497604", "ruan.danilo.teixeira@tecsysbrasil.com.br", encoder.encode("123"));
@@ -57,7 +71,19 @@ public class DBService {
         ServiceOrderMaterial serviceOrderMaterial1 = new ServiceOrderMaterial(null, serviceOrder1, material1, 3);
         ServiceOrderMaterial serviceOrderMaterial2 = new ServiceOrderMaterial(null, serviceOrder1, material2, 3);
 
-        technicianRepository.saveAll(Arrays.asList(technician, technician1, technician2, technician3));
+        technicianRepository.saveAll(Arrays.asList(
+                technician,
+                technician1,
+                technician2,
+                technician3,
+                technician4,
+                technician5,
+                technician6,
+                technician7,
+                technician8,
+                technician9,
+                technician10
+        ));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
         serviceOrderRepository.saveAll(Arrays.asList(serviceOrder1, serviceOrder2, serviceOrder3));
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));
