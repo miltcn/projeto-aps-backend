@@ -3,6 +3,7 @@ package com.miltcn.sosti.domain.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.miltcn.sosti.domain.Client;
 import com.miltcn.sosti.domain.enums.Profile;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class ClientDTO implements Serializable {
     @NotNull(message = "Required name field")
     protected String name;
     @NotNull(message = "Required cpf field")
+    @CPF
     protected String cpf;
     @NotNull(message = "Required email field")
     protected String email;
