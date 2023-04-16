@@ -44,7 +44,6 @@ public class ClientDTO implements Serializable {
         this.password = client.getPassword();
         this.profiles = client.getProfiles().stream().map(profile -> profile.getCode()).collect(Collectors.toSet());
         this.createdAt = client.getCreatedAt();
-        addProfile(Profile.CLIENT);
     }
 
     public Integer getId() {
