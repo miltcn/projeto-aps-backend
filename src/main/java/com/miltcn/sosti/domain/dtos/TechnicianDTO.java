@@ -44,7 +44,6 @@ public class TechnicianDTO implements Serializable {
         this.password = technician.getPassword();
         this.profiles = technician.getProfiles().stream().map(profile -> profile.getCode()).collect(Collectors.toSet());
         this.createdAt = technician.getCreatedAt();
-        addProfile(Profile.CLIENT);
     }
 
     public Integer getId() {
