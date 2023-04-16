@@ -3,6 +3,7 @@ package com.miltcn.sosti.services;
 import com.miltcn.sosti.domain.Person;
 import com.miltcn.sosti.domain.Technician;
 import com.miltcn.sosti.domain.dtos.TechnicianDTO;
+import com.miltcn.sosti.domain.enums.Profile;
 import com.miltcn.sosti.repositories.PersonRepository;
 import com.miltcn.sosti.repositories.TechnicianRepository;
 import com.miltcn.sosti.services.exceptions.DataIntegrityViolationException;
@@ -36,6 +37,9 @@ public class TechnicianService {
         technicianDTO.setId(null);
         technicianDTO.setPassword(encoder.encode(technicianDTO.getPassword()));
         validateByCpfEmail(technicianDTO);
+        if(!technicianDTO.getProfiles().contains(Profile.CLIENT)){
+            technicianDTO.addProfile(Profile.CLIENT);
+        }
         Technician technician = new Technician(technicianDTO);
         return this.technicianRepository.save(technician);
     }

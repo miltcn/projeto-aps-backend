@@ -3,6 +3,7 @@ package com.miltcn.sosti.services;
 import com.miltcn.sosti.domain.Person;
 import com.miltcn.sosti.domain.Client;
 import com.miltcn.sosti.domain.dtos.ClientDTO;
+import com.miltcn.sosti.domain.enums.Profile;
 import com.miltcn.sosti.repositories.PersonRepository;
 import com.miltcn.sosti.repositories.ClientRepository;
 import com.miltcn.sosti.services.exceptions.DataIntegrityViolationException;
@@ -36,6 +37,9 @@ public class ClientService {
         clientDTO.setId(null);
         clientDTO.setPassword(encoder.encode(clientDTO.getPassword()));
         validateByCpfEmail(clientDTO);
+        if(!clientDTO.getProfiles().contains(Profile.CLIENT)){
+            clientDTO.addProfile(Profile.CLIENT);
+        }
         Client client = new Client(clientDTO);
         return this.clientRepository.save(client);
     }
