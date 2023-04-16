@@ -46,9 +46,12 @@ public class ClientService {
 
     public Client update(Integer id, ClientDTO clientDTO) {
         clientDTO.setId(id);
-        this.findById(id);
+        Client oldClient = this.findById(id);
         this.validateByCpfEmail(clientDTO);
-        Client oldClient = new Client(clientDTO);
+        if(!clientDTO.getPassword().equals(oldClient.getPassword())){
+            clientDTO.setPassword(encoder.encode(clientDTO.getPassword()));
+        }
+        oldClient = new Client(clientDTO);
         return this.clientRepository.save(oldClient);
     }
 

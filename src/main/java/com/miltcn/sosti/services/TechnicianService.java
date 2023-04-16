@@ -46,9 +46,12 @@ public class TechnicianService {
 
     public Technician update(Integer id, TechnicianDTO technicianDTO) {
         technicianDTO.setId(id);
-        this.findById(id);
+        Technician oldTechnician = this.findById(id);
         this.validateByCpfEmail(technicianDTO);
-        Technician oldTechnician = new Technician(technicianDTO);
+        if(!technicianDTO.getPassword().equals(oldTechnician.getPassword())){
+            technicianDTO.setPassword(encoder.encode(technicianDTO.getPassword()));
+        }
+        oldTechnician = new Technician(technicianDTO);
         return this.technicianRepository.save(oldTechnician);
     }
 
