@@ -62,7 +62,14 @@ public class DBService {
 
         ServiceOrder serviceOrder1 = new ServiceOrder(null, Priority.MEDIA, Status.ANDAMENTO, "Chamado 01", "Chamada Teste 01", client1, technician1);
         ServiceOrder serviceOrder2 = new ServiceOrder(null, Priority.MEDIA, Status.ANDAMENTO, "Chamado 02", "Chamada Teste 02", client2, technician2);
-        ServiceOrder serviceOrder3 = new ServiceOrder(null, Priority.MEDIA, Status.ANDAMENTO, "Chamado 03", "Chamada Teste 03", client3, technician3);
+        ServiceOrder serviceOrder3 = new ServiceOrder(null, Priority.ALTA, Status.ABERTO, "Chamado 04", "Chamada Teste 04", client1, technician3);
+        ServiceOrder serviceOrder4 = new ServiceOrder(null, Priority.BAIXA, Status.ABERTO, "Chamado 05", "Chamada Teste 05", client2, technician4);
+        ServiceOrder serviceOrder5 = new ServiceOrder(null, Priority.BAIXA, Status.ABERTO, "Chamado 06", "Chamada Teste 06", client3, technician5);
+        ServiceOrder serviceOrder6 = new ServiceOrder(null, Priority.MEDIA, Status.ENCERRADO, "Chamado 07", "Chamada Teste 07", client1, technician6);
+        ServiceOrder serviceOrder7 = new ServiceOrder(null, Priority.ALTA, Status.ANDAMENTO, "Chamado 08", "Chamada Teste 08", client2, technician7);
+        ServiceOrder serviceOrder8 = new ServiceOrder(null, Priority.ALTA, Status.ENCERRADO, "Chamado 09", "Chamada Teste 09", client3, technician8);
+        ServiceOrder serviceOrder9 = new ServiceOrder(null, Priority.ALTA, Status.ANDAMENTO, "Chamado 03", "Chamada Teste 03", client1, technician9);
+        ServiceOrder serviceOrder10 = new ServiceOrder(null, Priority.MEDIA, Status.ANDAMENTO, "Chamado 10", "Chamada Teste 10", client2, technician9);
 
         Material material1 = new Material(null, "SSD 512GB", new BigDecimal("350.00"));
         Material material2 = new Material(null, "Placa de vídeo", new BigDecimal("750.00"));
@@ -85,7 +92,18 @@ public class DBService {
                 technician10
         ));
         clientRepository.saveAll(Arrays.asList(client1, client2, client3));
-        serviceOrderRepository.saveAll(Arrays.asList(serviceOrder1, serviceOrder2, serviceOrder3));
+        serviceOrderRepository.saveAll(Arrays.asList(
+                serviceOrder1,
+                serviceOrder2,
+                serviceOrder3,
+                serviceOrder4,
+                serviceOrder5,
+                serviceOrder6,
+                serviceOrder7,
+                serviceOrder8,
+                serviceOrder9,
+                serviceOrder10
+        ));
         materialRepository.saveAll(Arrays.asList(material1, material2, material3));
         serviceOrderMaterialRepository.saveAll(Arrays.asList(serviceOrderMaterial1, serviceOrderMaterial2));
 
